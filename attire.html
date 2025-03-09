@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attire</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&display=swap" rel="stylesheet">
+  <style>
+    /* Featured Section Styling */
+    .featured-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px;
+      text-align: center; /* centers all content inside */
+    }
+    .images-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .image-item {
+      flex: 0 0 auto;
+    }
+    .image-item img {
+      width: 400px; /* fixes all images to 400px width */
+      height: auto;
+      border: 4px solid #5d4037;
+      border-radius: 4px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .image-caption {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 14px;
+      color: #4a3526;
+      margin-top: 8px;
+    }
+    .featured-description {
+      font-family: 'Cinzel Decorative', serif;
+      color: #4a3526;
+      font-size: 20px;
+      line-height: 1.5;
+      margin-top: 30px;
+      padding: 0 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="scroll-menu">
+    <button class="menu-toggle" aria-label="Toggle menu">
+      <i class="fas fa-scroll"></i> Menu
+    </button>
+    <div class="menu-content">
+      <div class="scroll-handle top-handle"></div>
+      <ul class="menu-items">
+        <li style="--i: 0"><a href="index.html">Home</a></li>
+        <li style="--i: 1"><a href="language.html">Language</a></li>
+        <li style="--i: 2"><a href="attire.html">Attire</a></li>
+        <li style="--i: 3"><a href="festivals.html">Festivals</a></li>
+        <li style="--i: 4"><a href="birb.html">Bugun liocichla</a></li>
+        <li style="--i: 5"><a href="location.html">Location</a></li>
+        <li style="--i: 6"><a href="religion.html">Religion</a></li>
+    </ul>
+      <div class="scroll-handle bottom-handle"></div>
+    </div>
+  </div>
+  
+  <h1 id="homepageh1">Attire</h1>
+  
+  <!-- Featured Section: Two images side by side with captions and a descriptive paragraph below -->
+  <div class="featured-section">
+    <div class="images-container">
+      <div class="image-item">
+        <img src="https://thenortheasttravelblog.com/wp-content/uploads/2014/08/554076_500421300035240_651073794_n.jpg" alt="Traditional Attire 1">
+        <p class="image-caption">A newly wed Bagun couple</p>
+      </div>
+      <div class="image-item">
+        <img src="yandu1.jpg" alt="Traditional Attire 2">
+        <p class="image-caption">A Modern Teenage Bugun girl in her traditional attire</p>
+      </div>
+    </div>
+    <div class="featured-description">
+      <p>
+        Both men and women cover their body, neck to knee, with loose endi cloth, a sort of gown, obtained from the markets in the plains. Both sexes wear a colorful waist band, securing the white gown at the waist. A white cloth wrapping covers a man’s leg from below the knees to the ankle, with its upper edge decorated with cowries or colorful beads. The man sports a bamboo hat.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const menuToggle = document.querySelector('.menu-toggle');
+    const scrollMenu = document.querySelector('.scroll-menu');
+
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      scrollMenu.classList.toggle('active');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!scrollMenu.contains(e.target)) {
+        scrollMenu.classList.remove('active');
+      }
+    });
+
+    // Add keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        scrollMenu.classList.remove('active');
+      }
+    });
+  </script>
+</body>
+</html>

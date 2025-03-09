@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Location - Khowa Bugun Tribe</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: url('https://img.freepik.com/free-photo/old-brown-paper-texture-background_1373-431.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Cormorant Garamond', serif;
+      position: relative;
+    }
+
+    /* Scroll Container */
+    .scroll-menu {
+      position: fixed;
+      top: 30px;
+      right: 30px;
+      width: 300px;
+      perspective: 1200px;
+      z-index: 1000;
+    }
+
+    /* Scroll Button */
+    .menu-toggle {
+      position: relative;
+      width: 100%;
+      padding: 16px 28px;
+      background: #5d4037;
+      border: none;
+      color: #fffaf0;
+      font-size: 1.2rem;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      z-index: 2;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+      letter-spacing: 0.5px;
+    }
+
+    .menu-toggle:hover {
+      background: #4a3526;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+
+    /* Scroll Body */
+    .menu-content {
+      position: relative;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+      background: #fffaf0;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+      border-radius: 0 0 4px 4px;
+      transform-origin: top center;
+    }
+
+    /* Realistic Paper Texture */
+    .menu-content::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      right: -1px;
+      bottom: -1px;
+      background: 
+          linear-gradient(to bottom, 
+              rgba(0,0,0,0.03) 0%, 
+              transparent 3%,
+              transparent 97%,
+              rgba(0,0,0,0.03) 100%),
+          repeating-linear-gradient(
+              to bottom,
+              transparent 0px,
+              transparent 24px,
+              rgba(0,0,0,0.06) 24px,
+              rgba(0,0,0,0.06) 25px
+          ),
+          url('https://www.transparenttextures.com/patterns/soft-wallpaper.png');
+      pointer-events: none;
+      border-radius: 4px;
+    }
+
+    /* Aged Paper Edges */
+    .menu-content::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+          to right,
+          rgba(0,0,0,0.02) 0%,
+          rgba(0,0,0,0.05) 50%,
+          rgba(0,0,0,0.02) 100%
+      );
+      pointer-events: none;
+    }
+
+    /* Bamboo Scroll Handles */
+    .scroll-handle {
+      position: absolute;
+      width: calc(100% + 8px);
+      height: 28px;
+      left: -4px;
+      background: 
+          repeating-linear-gradient(
+              90deg,
+              #4a3526 0px,
+              #4a3526 4px,
+              #5d4037 4px,
+              #5d4037 8px
+          ),
+          linear-gradient(
+              to bottom,
+              rgba(0,0,0,0.1) 0%,
+              transparent 15%,
+              transparent 85%,
+              rgba(0,0,0,0.1) 100%
+          );
+      box-shadow: 
+          0 2px 8px rgba(0,0,0,0.2),
+          inset 0 1px 2px rgba(255,255,255,0.1);
+      transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+      z-index: 1;
+    }
+
+    .top-handle {
+      top: -6px;
+      transform: rotateX(60deg) translateZ(-14px);
+      transform-origin: top;
+    }
+
+    .bottom-handle {
+      bottom: -6px;
+      transform: rotateX(-60deg) translateZ(-14px);
+      transform-origin: bottom;
+    }
+
+    /* Menu Items */
+    .menu-items {
+      padding: 40px 30px;
+      list-style: none;
+      position: relative;
+      z-index: 2;
+    }
+
+    .menu-items li {
+      margin: 22px 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .menu-items a {
+      text-decoration: none;
+      color: #4a3526;
+      font-size: 1.2rem;
+      display: block;
+      padding: 10px 20px;
+      transition: all 0.4s;
+      position: relative;
+      border-left: 4px solid transparent;
+      background: rgba(0,0,0,0.03);
+      border-radius: 2px;
+    }
+
+    .menu-items a:hover {
+      border-left: 4px solid #5d4037;
+      padding-left: 25px;
+      background: rgba(0,0,0,0.05);
+      transform: translateX(8px);
+    }
+
+    /* Active State */
+    .scroll-menu.active .menu-content {
+      max-height: 600px;
+      padding: 30px 0;
+      transform: translateZ(10px);
+    }
+
+    .scroll-menu.active .scroll-handle {
+      transform: rotateX(0) translateZ(0);
+    }
+
+    .scroll-menu.active .menu-items li {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: calc(0.08s * var(--i));
+    }
+
+    /* Icon Animation */
+    .menu-toggle i {
+      transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+      margin-right: 10px;
+    }
+
+    .scroll-menu.active .menu-toggle i {
+      transform: rotate(180deg);
+    }
+
+    #homepageh1 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      font-family: 'Cinzel Decorative', serif;
+      color: #4a3526;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+      font-size: 75px;
+      margin-top: 50px;
+    }
+
+    /* Featured Section Styling */
+    .featured-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px;
+      text-align: center;
+    }
+    
+    .map-container {
+      margin: 30px auto;
+      text-align: center;
+    }
+    
+    .map-container img {
+      width: 80%;
+      max-width: 800px;
+      border: 4px solid #5d4037;
+      border-radius: 4px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    
+    .images-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 40px;
+    }
+    
+    .image-item {
+      flex: 0 0 auto;
+    }
+    
+    .image-item img {
+      width: 400px;
+      height: auto;
+      border: 4px solid #5d4037;
+      border-radius: 4px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    
+    .image-caption {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 14px;
+      color: #4a3526;
+      margin-top: 8px;
+    }
+    
+    .featured-description {
+      font-family: 'Cinzel Decorative', serif;
+      color: #4a3526;
+      font-size: 20px;
+      line-height: 1.5;
+      margin-top: 30px;
+      padding: 0 20px;
+      text-align: justify;
+    }
+    
+    .location-details {
+      margin-top: 50px;
+      background: rgba(255, 250, 240, 0.7);
+      padding: 30px;
+      border: 2px solid #5d4037;
+      border-radius: 4px;
+      text-align: left;
+    }
+    
+    .location-title {
+      font-family: 'Cinzel Decorative', serif;
+      color: #4a3526;
+      font-size: 28px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .location-list {
+      list-style: none;
+    }
+    
+    .location-item {
+      display: block;
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 15px;
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 18px;
+      color: #4a3526;
+    }
+    
+    .location-item::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #4a3526;
+    }
+    
+    .conservation-highlight {
+      margin-top: 50px;
+      background: rgba(93, 64, 55, 0.1);
+      padding: 30px;
+      border-left: 6px solid #5d4037;
+    }
+  </style>
+</head>
+<body>
+  <div class="scroll-menu">
+    <button class="menu-toggle" aria-label="Toggle menu">
+      <i class="fas fa-scroll"></i> Menu
+    </button>
+    <div class="menu-content">
+      <div class="scroll-handle top-handle"></div>
+      <ul class="menu-items">
+        <li style="--i: 0"><a href="index.html">Home</a></li>
+        <li style="--i: 1"><a href="language.html">Language</a></li>
+        <li style="--i: 2"><a href="attire.html">Attire</a></li>
+        <li style="--i: 3"><a href="festivals.html">Festivals</a></li>
+        <li style="--i: 4"><a href="birb.html">Bugun liocichla</a></li>
+        <li style="--i: 5"><a href="location.html">Location</a></li>
+        <li style="--i: 6"><a href="religion.html">Religion</a></li>
+      </ul>
+      <div class="scroll-handle bottom-handle"></div>
+    </div>
+  </div>
+  
+  <h1 id="homepageh1">Location</h1>
+  
+  <div class="featured-section">
+    <div class="map-container">
+      <img src="https://imgs.search.brave.com/CEzpM6rEngtQAoJM3RCpW0hvVeR-ig1kdyvULpGp7Qk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pMC53/cC5jb20vY29tcGFz/cy5yYXVpYXMuY29t/L3dwLWNvbnRlbnQv/dXBsb2Fkcy8yMDI0/LzAzL0Rpc3RyaWN0/LU1hcC1vZi1BcnVu/YWNoYWwtUHJhZGVz/aC0xLmpwZWc_cmVz/aXplPTgwMCw0ODcm/c3NsPTE" alt="Map showing Khowa Bugun territory in Arunachal Pradesh">
+    </div>
+    
+    <div class="featured-description">
+      <p>
+        The Khowa-Bugun tribe, also known simply as the Bugun tribe, primarily inhabits the West Kameng district of Arunachal Pradesh in northeastern India. Their settlements are concentrated near Eaglenest Wildlife Sanctuary and Singchung Bugun Village Community Reserve (SBVCR) in the foothills of the Eastern Himalayas.
+      </p>
+    </div>
+    
+    <div class="location-details">
+      <h2 class="location-title">Geographic Location</h2>
+      <ul class="location-list">
+        <li class="location-item">The Bugun people live mainly in villages such as Singchung, Wanghoo, Muchut, and Namphri</li>
+        <li class="location-item">Settlements are at elevations ranging from 1,500 to 2,000 meters above sea level</li>
+        <li class="location-item">Their homeland sits along the Indo-Bhutan border region</li>
+        <li class="location-item">The region is characterized by dense forests, valleys, and mountain slopes</li>
+        <li class="location-item">Located in the Eastern Himalayan biodiversity hotspot</li>
+        <li class="location-item">The territory covers approximately 17 square kilometers of community-reserved forest</li>
+      </ul>
+    </div>
+    
+    <div class="conservation-highlight">
+      <h2 class="location-title">Singchung Bugun Village Community Reserve</h2>
+      <div class="featured-description">
+        <p>
+          In 2017, the Bugun community established the Singchung Bugun Village Community Reserve (SBVCR), covering 17 square kilometers of their traditional land. This initiative won India's prestigious Biodiversity Award and demonstrates their commitment to preserving their natural heritage.
+        </p>
+        <p style="margin-top: 20px;">
+          The reserve was created primarily to protect the critically endangered Bugun Liocichla bird, which was discovered in 2006 and is found nowhere else in the world. This bird species was named after the tribe, highlighting the intrinsic connection between the community and their environment.
+        </p>
+      </div>
+    </div>
+    
+    <div class="location-details" style="margin-top: 50px;">
+      <h2 class="location-title">How to Reach</h2>
+      <ul class="location-list">
+        <li class="location-item"><strong>Nearest Airport:</strong> Tezpur Airport (Assam), approximately 150 km</li>
+        <li class="location-item"><strong>Nearest Railway Station:</strong> Tezpur Railway Station</li>
+        <li class="location-item"><strong>Road Access:</strong> From Tezpur, take the road to Bomdila via Bhalukpong. The Bugun villages are located near Eaglenest Wildlife Sanctuary entrance.</li>
+        <li class="location-item"><strong>Important Note:</strong> Visitors to Arunachal Pradesh require an Inner Line Permit (ILP) that can be obtained online or from designated government offices.</li>
+        <li class="location-item"><strong>Best Time to Visit:</strong> October to April when the weather is pleasant and roads are generally accessible.</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    const menuToggle = document.querySelector('.menu-toggle');
+    const scrollMenu = document.querySelector('.scroll-menu');
+
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      scrollMenu.classList.toggle('active');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!scrollMenu.contains(e.target)) {
+        scrollMenu.classList.remove('active');
+      }
+    });
+
+    // Add keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        scrollMenu.classList.remove('active');
+      }
+    });
+  </script>
+</body>
+</html>

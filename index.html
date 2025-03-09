@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        html, body {
+    overflow: hidden;
+  }
+    </style>
+</head>
+<body>
+    <div class="scroll-menu">
+        <button class="menu-toggle" aria-label="Toggle menu">
+            <i class="fas fa-scroll"></i> Menu
+        </button>
+        <div class="menu-content">
+            <div class="scroll-handle top-handle"></div>
+            <ul class="menu-items">
+                <li style="--i: 0"><a href="index.html">Home</a></li>
+                <li style="--i: 1"><a href="language.html">Language</a></li>
+                <li style="--i: 2"><a href="attire.html">Attire</a></li>
+                <li style="--i: 3"><a href="festivals.html">Festivals</a></li>
+                <li style="--i: 4"><a href="birb.html">Bugun liocichla</a></li>
+                <li style="--i: 5"><a href="location.html">Location</a></li>
+                <li style="--i: 6"><a href="religion.html">Religion</a></li>
+            </ul>
+            <div class="scroll-handle bottom-handle"></div>
+        </div>
+    </div>
+    <h1 id="homepageh1">The Khowa Tribe</h1>
+    <p id="homepageh2">The Khowa tribe, also known as Bugun people in their native language, of western Arunachal Pradesh bordering Bhutan is one of India’s smallest tribal communities and has a small population of only around 2,000 members. They are primarily the inhabitants of Tenga valley and some also dwell in the subtropical forests near Bhalukpong in the Himalayan foothills of West Kameng district.</p>
+
+
+    <script>
+        const menuToggle = document.querySelector('.menu-toggle');
+        const scrollMenu = document.querySelector('.scroll-menu');
+
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            scrollMenu.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!scrollMenu.contains(e.target)) {
+                scrollMenu.classList.remove('active');
+            }
+        });
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                scrollMenu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
